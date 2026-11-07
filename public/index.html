@@ -1,66 +1,99 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Search Buses | Metro Bus Booking</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
-</head>
-<body>
-  <nav class="navbar navbar-expand brand-bar">
-    <div class="container">
-      <span class="navbar-brand">Metro Bus</span>
-      <ul class="navbar-nav">
-        <li class="nav-item"><a class="nav-link active" href="index.html">Search buses</a></li>
-        <li class="nav-item"><a class="nav-link" href="manage.html">Manage buses</a></li>
-      </ul>
-    </div>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Search Buses | Metro Bus Booking</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand brand-bar">
+      <div class="container">
+        <!-- Added the Metro-Logo.webp here -->
+        <a class="navbar-brand" href="index.html">
+          <img src="Metro-Logo.webp" alt="Metro Logo" />
+        </a>
 
-  <main class="container py-4">
-    <h1 class="h3 page-title mb-3">Search metro buses</h1>
-
-    <form id="searchForm" class="card card-body mb-4">
-      <div class="row g-3 align-items-end">
-        <div class="col-md-3">
-          <label for="searchType" class="form-label">Search by</label>
-          <select id="searchType" class="form-select">
-            <option value="available">Available buses</option>
-            <option value="route">Route</option>
-            <option value="departure">Departure location</option>
-            <option value="destination">Destination</option>
-            <option value="date">Travel date</option>
-          </select>
-        </div>
-        <div class="col-md-5" id="termGroup">
-          <label for="searchTerm" class="form-label" id="termLabel">Optional filter (destination)</label>
-          <input id="searchTerm" type="text" class="form-control" placeholder="e.g. Kandy">
-        </div>
-        <div class="col-md-4 d-flex gap-2">
-          <button type="submit" class="btn btn-primary flex-grow-1">Search</button>
-          <button type="button" id="clearBtn" class="btn btn-outline-secondary">Clear</button>
-        </div>
+        <ul class="navbar-nav ms-auto">
+          <!-- Update the 'active' class depending on if you are in index.html or manage.html -->
+          <li class="nav-item">
+            <a class="nav-link active" href="index.html">Search buses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="manage.html">Manage buses</a>
+          </li>
+        </ul>
       </div>
-    </form>
+    </nav>
 
-    <div id="message"></div>
-    <div id="resultCount" class="text-muted mb-2"></div>
+    <main class="container py-4">
+      <h1 class="h3 page-title mb-3">Search metro buses</h1>
 
-    <div class="table-responsive card">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr>
-            <th>Bus ID</th><th>Name</th><th>Route</th><th>Date</th>
-            <th>Departs</th><th>Arrives</th><th>Seats</th><th class="text-end">Fare (LKR)</th>
-          </tr>
-        </thead>
-        <tbody id="results"></tbody>
-      </table>
-    </div>
-  </main>
+      <form id="searchForm" class="card card-body mb-4">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-3">
+            <label for="searchType" class="form-label">Search by</label>
+            <select id="searchType" class="form-select">
+              <option value="available">Available buses</option>
+              <option value="route">Route</option>
+              <option value="departure">Departure location</option>
+              <option value="destination">Destination</option>
+              <option value="date">Travel date</option>
+            </select>
+          </div>
+          <div class="col-md-5" id="termGroup">
+            <label for="searchTerm" class="form-label" id="termLabel"
+              >Optional filter (destination)</label
+            >
+            <input
+              id="searchTerm"
+              type="text"
+              class="form-control"
+              placeholder="e.g. Kandy"
+            />
+          </div>
+          <div class="col-md-4 d-flex gap-2">
+            <button type="submit" class="btn btn-primary flex-grow-1">
+              Search
+            </button>
+            <button
+              type="button"
+              id="clearBtn"
+              class="btn btn-outline-secondary"
+            >
+              Clear
+            </button>
+          </div>
+        </div>
+      </form>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="js/search.js"></script>
-</body>
+      <div id="message"></div>
+      <div id="resultCount" class="text-muted mb-2"></div>
+
+      <div class="table-responsive card">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Bus ID</th>
+              <th>Name</th>
+              <th>Route</th>
+              <th>Date</th>
+              <th>Departs</th>
+              <th>Arrives</th>
+              <th>Seats</th>
+              <th class="text-end">Fare (LKR)</th>
+            </tr>
+          </thead>
+          <tbody id="results"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="js/search.js"></script>
+  </body>
 </html>
