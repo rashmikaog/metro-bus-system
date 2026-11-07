@@ -1,146 +1,352 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Manage Buses | Metro Bus Booking</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
-</head>
-<body>
-  <nav class="navbar navbar-expand brand-bar">
-    <div class="container">
-      <!-- Added the Metro-Logo.webp here -->
-      <a class="navbar-brand" href="index.html">
-        <img src="Metro-Logo.webp" alt="Metro Logo">
-      </a>
-      
-      <ul class="navbar-nav ms-auto">
-        <!-- Update the 'active' class depending on if you are in index.html or manage.html -->
-        <li class="nav-item"><a class="nav-link active" href="index.html">Search buses</a></li>
-        <li class="nav-item"><a class="nav-link" href="manage.html">Manage buses</a></li>
-      </ul>
-    </div>
-  </nav>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Manage Buses | Metro Bus Booking</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
+    <link href="css/style.css" rel="stylesheet" />
+  </head>
+  <body>
+    <nav class="navbar navbar-expand brand-bar">
+      <div class="container">
+        <a class="navbar-brand" href="index.html">
+          <img src="Metro-Logo.webp" alt="Metro Logo" />
+        </a>
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="index.html">Search buses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="manage.html">Manage buses</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
 
-  <main class="container py-4">
-    <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-3">
-      <h1 class="h3 page-title mb-0">Manage buses</h1>
-      <div class="d-flex gap-2">
-        <div class="input-group" style="max-width: 260px;">
-          <input id="findId" type="text" class="form-control" placeholder="Find by Bus ID">
-          <button id="findBtn" class="btn btn-outline-primary" type="button">Find</button>
+    <main class="container py-4">
+      <div
+        class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-4"
+      >
+        <h1 class="h3 page-title mb-0">Manage buses</h1>
+        <div class="d-flex gap-2">
+          <div class="input-group" style="max-width: 260px">
+            <input
+              id="findId"
+              type="text"
+              class="form-control"
+              placeholder="Find by Bus ID"
+            />
+            <button id="findBtn" class="btn btn-outline-primary" type="button">
+              Find
+            </button>
+          </div>
+          <button
+            id="showAllBtn"
+            class="btn btn-outline-secondary"
+            type="button"
+          >
+            Show all
+          </button>
+          <button id="addBtn" class="btn btn-primary" type="button">
+            Add bus
+          </button>
         </div>
-        <button id="showAllBtn" class="btn btn-outline-secondary" type="button">Show all</button>
-        <button id="addBtn" class="btn btn-primary" type="button">Add bus</button>
+      </div>
+
+      <div id="message"></div>
+
+      <div class="table-responsive card">
+        <table class="table table-hover align-middle mb-0">
+          <thead>
+            <tr>
+              <th>Bus ID</th>
+              <th>Name</th>
+              <th>Route</th>
+              <th>Date</th>
+              <th>Departs</th>
+              <th>Arrives</th>
+              <th>Seats</th>
+              <th class="text-end">Fare</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="busTable"></tbody>
+        </table>
+      </div>
+    </main>
+
+    <!-- Add / Edit bus -->
+    <div
+      class="modal fade"
+      id="busModal"
+      tabindex="-1"
+      aria-labelledby="busModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-lg">
+        <form id="busForm" class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="busModalTitle">Add bus</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <div id="formError"></div>
+            <div class="row g-3">
+              <div class="col-md-4">
+                <label class="form-label" for="Bus_ID">Bus ID</label>
+                <input
+                  class="form-control"
+                  id="Bus_ID"
+                  required
+                  placeholder="MB1001"
+                />
+              </div>
+              <div class="col-md-8">
+                <label class="form-label" for="Bus_Name">Bus name</label>
+                <input
+                  class="form-control"
+                  id="Bus_Name"
+                  required
+                  placeholder="Metro Express"
+                />
+              </div>
+              <div class="col-12">
+                <label class="form-label" for="Route">Route</label>
+                <input
+                  class="form-control"
+                  id="Route"
+                  required
+                  placeholder="Colombo - Makubura"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="Departure">Departure</label>
+                <input
+                  class="form-control"
+                  id="Departure"
+                  required
+                  placeholder="Colombo Fort"
+                />
+              </div>
+              <div class="col-md-6">
+                <label class="form-label" for="Destination">Destination</label>
+                <input
+                  class="form-control"
+                  id="Destination"
+                  required
+                  placeholder="Makubura"
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="Travel_Date">Travel date</label>
+                <input
+                  class="form-control"
+                  id="Travel_Date"
+                  type="date"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="Departure_Time"
+                  >Departure time</label
+                >
+                <input
+                  class="form-control"
+                  id="Departure_Time"
+                  type="time"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="Arrival_Time"
+                  >Arrival time</label
+                >
+                <input
+                  class="form-control"
+                  id="Arrival_Time"
+                  type="time"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="Total_Seats">Total seats</label>
+                <input
+                  class="form-control"
+                  id="Total_Seats"
+                  type="number"
+                  min="1"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="Available_Seats"
+                  >Available seats</label
+                >
+                <input
+                  class="form-control"
+                  id="Available_Seats"
+                  type="number"
+                  min="0"
+                  required
+                />
+              </div>
+              <div class="col-md-4">
+                <label class="form-label" for="Fare">Fare (LKR)</label>
+                <input
+                  class="form-control"
+                  id="Fare"
+                  type="number"
+                  min="0"
+                  step="0.01"
+                  required
+                />
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary" id="saveBtn">
+              Save bus
+            </button>
+          </div>
+        </form>
       </div>
     </div>
 
-    <div id="message"></div>
-
-    <div class="table-responsive card">
-      <table class="table table-hover align-middle mb-0">
-        <thead>
-          <tr>
-            <th>Bus ID</th><th>Name</th><th>Route</th><th>Date</th><th>Departs</th>
-            <th>Arrives</th><th>Seats</th><th class="text-end">Fare</th><th class="text-end">Actions</th>
-          </tr>
-        </thead>
-        <tbody id="busTable"></tbody>
-      </table>
-    </div>
-  </main>
-
-  <!-- Add / Edit bus -->
-  <div class="modal fade" id="busModal" tabindex="-1" aria-labelledby="busModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-      <form id="busForm" class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title h5" id="busModalTitle">Add bus</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div id="formError"></div>
-          <div class="row g-3">
-            <div class="col-md-4"><label class="form-label" for="Bus_ID">Bus ID</label>
-              <input class="form-control" id="Bus_ID" required placeholder="MB1001"></div>
-            <div class="col-md-8"><label class="form-label" for="Bus_Name">Bus name</label>
-              <input class="form-control" id="Bus_Name" required placeholder="Metro Express"></div>
-            <div class="col-12"><label class="form-label" for="Route">Route</label>
-              <input class="form-control" id="Route" required placeholder="Colombo - Makubura"></div>
-            <div class="col-md-6"><label class="form-label" for="Departure">Departure</label>
-              <input class="form-control" id="Departure" required placeholder="Colombo Fort"></div>
-            <div class="col-md-6"><label class="form-label" for="Destination">Destination</label>
-              <input class="form-control" id="Destination" required placeholder="Makubura"></div>
-            <div class="col-md-4"><label class="form-label" for="Travel_Date">Travel date</label>
-              <input class="form-control" id="Travel_Date" type="date" required></div>
-            <div class="col-md-4"><label class="form-label" for="Departure_Time">Departure time</label>
-              <input class="form-control" id="Departure_Time" type="time" required></div>
-            <div class="col-md-4"><label class="form-label" for="Arrival_Time">Arrival time</label>
-              <input class="form-control" id="Arrival_Time" type="time" required></div>
-            <div class="col-md-4"><label class="form-label" for="Total_Seats">Total seats</label>
-              <input class="form-control" id="Total_Seats" type="number" min="1" required></div>
-            <div class="col-md-4"><label class="form-label" for="Available_Seats">Available seats</label>
-              <input class="form-control" id="Available_Seats" type="number" min="0" required></div>
-            <div class="col-md-4"><label class="form-label" for="Fare">Fare (LKR)</label>
-              <input class="form-control" id="Fare" type="number" min="0" step="0.01" required></div>
+    <!-- Update schedule -->
+    <div
+      class="modal fade"
+      id="scheduleModal"
+      tabindex="-1"
+      aria-labelledby="scheduleModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <form id="scheduleForm" class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="scheduleModalTitle">
+              Update schedule
+            </h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary" id="saveBtn">Save bus</button>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Update schedule -->
-  <div class="modal fade" id="scheduleModal" tabindex="-1" aria-labelledby="scheduleModalTitle" aria-hidden="true">
-    <div class="modal-dialog">
-      <form id="scheduleForm" class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title h5" id="scheduleModalTitle">Update schedule</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          <div id="scheduleError"></div>
-          <input type="hidden" id="sch_Bus_ID">
-          <div class="mb-3"><label class="form-label" for="sch_Travel_Date">Travel date</label>
-            <input class="form-control" id="sch_Travel_Date" type="date" required></div>
-          <div class="row g-3">
-            <div class="col-6"><label class="form-label" for="sch_Departure_Time">Departure time</label>
-              <input class="form-control" id="sch_Departure_Time" type="time" required></div>
-            <div class="col-6"><label class="form-label" for="sch_Arrival_Time">Arrival time</label>
-              <input class="form-control" id="sch_Arrival_Time" type="time" required></div>
+          <div class="modal-body">
+            <div id="scheduleError"></div>
+            <input type="hidden" id="sch_Bus_ID" />
+            <div class="mb-3">
+              <label class="form-label" for="sch_Travel_Date"
+                >Travel date</label
+              >
+              <input
+                class="form-control"
+                id="sch_Travel_Date"
+                type="date"
+                required
+              />
+            </div>
+            <div class="row g-3">
+              <div class="col-6">
+                <label class="form-label" for="sch_Departure_Time"
+                  >Departure time</label
+                >
+                <input
+                  class="form-control"
+                  id="sch_Departure_Time"
+                  type="time"
+                  required
+                />
+              </div>
+              <div class="col-6">
+                <label class="form-label" for="sch_Arrival_Time"
+                  >Arrival time</label
+                >
+                <input
+                  class="form-control"
+                  id="sch_Arrival_Time"
+                  type="time"
+                  required
+                />
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="submit" class="btn btn-primary">Save schedule</button>
-        </div>
-      </form>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="submit" class="btn btn-primary">Save schedule</button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
 
-  <!-- Delete confirmation -->
-  <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalTitle" aria-hidden="true">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h2 class="modal-title h5" id="deleteModalTitle">Delete bus?</h2>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">Bus <strong id="deleteIdLabel"></strong> will be removed permanently.</div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Cancel</button>
-          <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete bus</button>
+    <!-- Delete confirmation -->
+    <div
+      class="modal fade"
+      id="deleteModal"
+      tabindex="-1"
+      aria-labelledby="deleteModalTitle"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title h5" id="deleteModalTitle">Delete bus?</h2>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            Bus <strong id="deleteIdLabel"></strong> will be removed
+            permanently.
+          </div>
+          <div class="modal-footer">
+            <button
+              type="button"
+              class="btn btn-outline-secondary"
+              data-bs-dismiss="modal"
+            >
+              Cancel
+            </button>
+            <button type="button" class="btn btn-danger" id="confirmDeleteBtn">
+              Delete bus
+            </button>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-  <script src="js/manage.js"></script>
-</body>
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/manage.js"></script>
+  </body>
 </html>

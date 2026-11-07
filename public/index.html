@@ -8,18 +8,19 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
     <link href="css/style.css" rel="stylesheet" />
   </head>
   <body>
     <nav class="navbar navbar-expand brand-bar">
       <div class="container">
-        <!-- Added the Metro-Logo.webp here -->
         <a class="navbar-brand" href="index.html">
           <img src="Metro-Logo.webp" alt="Metro Logo" />
         </a>
-
         <ul class="navbar-nav ms-auto">
-          <!-- Update the 'active' class depending on if you are in index.html or manage.html -->
           <li class="nav-item">
             <a class="nav-link active" href="index.html">Search buses</a>
           </li>
@@ -31,13 +32,16 @@
     </nav>
 
     <main class="container py-4">
-      <h1 class="h3 page-title mb-3">Search metro buses</h1>
+      <h1 class="h3 page-title mb-4">Search metro buses</h1>
 
-      <form id="searchForm" class="card card-body mb-4">
-        <div class="row g-3 align-items-end">
-          <div class="col-md-3">
-            <label for="searchType" class="form-label">Search by</label>
-            <select id="searchType" class="form-select">
+      <form id="searchForm" class="mb-5">
+        <div class="search-pill-wrapper">
+          <div class="search-input-box">
+            <i class="bi bi-search ms-2"></i>
+            <select
+              id="searchType"
+              class="form-select border-0 shadow-none bg-transparent"
+            >
               <option value="available">Available buses</option>
               <option value="route">Route</option>
               <option value="departure">Departure location</option>
@@ -45,27 +49,30 @@
               <option value="date">Travel date</option>
             </select>
           </div>
-          <div class="col-md-5" id="termGroup">
-            <label for="searchTerm" class="form-label" id="termLabel"
-              >Optional filter (destination)</label
-            >
+
+          <div class="search-divider"></div>
+
+          <div class="search-input-box" id="termGroup">
+            <i class="bi bi-geo-alt ms-2"></i>
             <input
               id="searchTerm"
               type="text"
-              class="form-control"
-              placeholder="e.g. Kandy"
+              class="form-control border-0 shadow-none bg-transparent"
+              placeholder="e.g. Kandy, Colombo, Route 138..."
             />
           </div>
-          <div class="col-md-4 d-flex gap-2">
-            <button type="submit" class="btn btn-primary flex-grow-1">
-              Search
+
+          <div class="search-actions">
+            <button type="submit" class="btn btn-pill-primary">
+              Find Buses
             </button>
             <button
               type="button"
               id="clearBtn"
-              class="btn btn-outline-secondary"
+              class="btn btn-pill-icon"
+              title="Clear"
             >
-              Clear
+              <i class="bi bi-x-lg"></i>
             </button>
           </div>
         </div>
