@@ -1,0 +1,8 @@
+body { background: #f4f6f8; }
+.brand-bar { background: #0b3d5c; }
+.brand-bar .navbar-brand, .brand-bar .nav-link { color: #fff; }
+.brand-bar .nav-link.active { font-weight: 600; border-bottom: 2px solid #ffc83d; }
+.page-title { color: #0b3d5c; font-weight: 700; }
+.table thead th { background: #0b3d5c; color: #fff; white-space: nowrap; }
+.seat-badge { min-width: 3.2rem; }
+.empty-note { color: #6c757d; padding: 1.5rem; text-align: center; }
